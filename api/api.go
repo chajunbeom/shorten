@@ -21,14 +21,20 @@ type API struct {
 
 func (o API) Redirecting(c echo.Context) error {
 	shortURL := c.Param("shortURL")
+	fmt.Println(shortURL)
 	if shortURL == "" {
 		resp := Response{}
 		resp.Error("short url invalid", nil)
 		return c.JSON(http.StatusOK, resp)
 	}
 	redirectURL := models.GetOriginURL(shortURL)
-	fmt.Println(shortURL)
-	if !strings.HasPrefix(redirectURL, "https") || !strings.HasPrefix(redirectURL, "http") {
+	if redirectURL == "" {
+		fmt.Println("not found")
+		return c.NoContent(404)
+	}
+
+	fmt.Println("redirectingURL", redirectURL)
+	if !strings.HasPrefix(redirectURL, "https://") && !strings.HasPrefix(redirectURL, "http://") {
 		redirectURL = "http://" + redirectURL
 	}
 
@@ -37,7 +43,7 @@ func (o API) Redirecting(c echo.Context) error {
 
 func (o API) ConvertURL(c echo.Context) error {
 	origin := c.FormValue("origin_url")
-	fmt.Println("original URL", origin)
+
 	resp := Response{}
 	if origin == "" {
 		resp.Error("origin_url field null", nil)
@@ -52,6 +58,8 @@ func (o API) ConvertURL(c echo.Context) error {
 	data := &models.ShortenURLdata{
 		Origin: origin,
 	}
+
+	fmt.Println("original URL", data.Origin)
 	if short := models.GetShortenURL(origin); short != "" {
 		data.Shorten = short
 		resp.OK(data)

@@ -38,7 +38,7 @@
           if (data.result == "OK") {
             var shortenURL = window.location.href+data.data.shorten_url
             document.getElementById("shorten_url").value = shortenURL
-            document.getElementById("origin_url").value = "줄이고 싶은 URL을 입력하세요"
+            document.getElementById("origin_url").value = ""
           } else {
             alert(data.result)
           }

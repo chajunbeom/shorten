@@ -1,7 +1,7 @@
 {
     "db_type" : "memory",
     "server_info" :{
-        "port" : 1323, 
+        "port" : 23000, 
         "api_route" : [
             {
                 "path" : "/:shortURL",
