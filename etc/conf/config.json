@@ -1,0 +1,24 @@
+{
+    "db_type" : "memory",
+    "server_info" :{
+        "port" : 1323, 
+        "api_route" : [
+            {
+                "path" : "/:shortURL",
+                "method" : "get",
+                "handler" : "Redirecting"
+            },
+            {
+                "path" : "/convert",
+                "method" : "post",
+                "handler" : "ConvertURL"
+            }
+        ],
+        "static" : [
+            {
+                "path" : "/",
+                "file" : "docs/index.html"
+            }
+        ]
+    }
+}

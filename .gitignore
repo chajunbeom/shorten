@@ -1,0 +1,11 @@
+logs/
+doc/
+cred/
+.idea/
+bin/
+credentials
+.out
+.exe
+debug
+.vscode
+.DS_Store

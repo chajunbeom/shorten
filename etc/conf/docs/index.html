@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <h1>URL shorten</h1>
+    <div class="input-group mb-3">
+      <input id="origin_url" type="text" class="form-control col-md-5" placeholder="줄이고 싶은 URL을 입력하세요">
+      <button id="convert" type="button" class="btn btn-primary col-md-1">Shorten</button>
+    </div>
+    <div class="input-group mb-3">
+      <input id="shorten_url" class="form-control col-md-5" type="text" placeholder="Shorten url..." readonly>
+      <button id="copy" type="button" class="btn btn-danger col-md-1">Copy</button>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      $("#convert").click(function(e){
+        var origin_url = document.getElementById("origin_url").value;
+        if (origin_url == "") {
+          alert("Typing url")
+          return;
+        }
+        var body = {origin_url:origin_url};
+        var callback = function(data) {
+          if (data.result == "OK") {
+            var shortenURL = window.location.href+data.data.shorten_url
+            document.getElementById("shorten_url").value = shortenURL
+            document.getElementById("origin_url").value = "줄이고 싶은 URL을 입력하세요"
+          } else {
+            alert(data.result)
+          }
+        }
+        var errorback = function(xhr, status, error) {
+          alert(error);
+        }
+        var dict = {type:"POST",url:"convert",data:body,success:callback,error:errorback};
+        $.ajax(dict);
+      })
+
+      $("#copy").click(function(e){
+        var copyText = document.getElementById("shorten_url");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Copied the url: " + copyText.value);
+      })
+         
+    </script>
+  </body>
+</html>
