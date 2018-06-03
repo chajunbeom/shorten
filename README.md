@@ -45,7 +45,7 @@ $ make run
 어플리케이션 중지
 $ make stop
 ```
-정상적으로 실행 됬다면 http://localhost:1323  (Default)으로 접속합니다.
+정상적으로 실행 됬다면 http://localhost:23000  (Default)으로 접속합니다.
 
 ## 단위 테스트
 
